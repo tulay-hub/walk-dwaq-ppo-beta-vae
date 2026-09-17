@@ -1,3 +1,6 @@
+<p align="center"><a href="#zh">🇨🇳 中文</a> &nbsp;|&nbsp; <a href="#en">🇬🇧 English</a></p>
+<a id="zh"></a>
+
 # 03 · 行走（DWAQ Walk）
 
 ## 项目定位
@@ -50,6 +53,8 @@ cd framework/isaaclab_shared/lens110/legged_lab_lbot
 
 奖励结构见 [`docs/REWARD_FRAMEWORKS.md`](docs/REWARD_FRAMEWORKS.md) 的 DWAQ 章节；算法层的 VAE
 velocity/reconstruction/KL loss 在共享框架的 `rsl_rl/rsl_rl/algorithms/dwaq_ppo.py` 中实现。
+
+<a id="en"></a>
 
 ## English
 
