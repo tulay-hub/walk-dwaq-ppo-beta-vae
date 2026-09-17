@@ -177,7 +177,7 @@ docs/                         # 奖励证据和复现记录
 训练入口：
 
 ```bash
-./projects/03_walk/scripts/train.sh --headless --num_envs 4096
+./scripts/train.sh --headless --num_envs 4096
 ```
 
 ONNX/推理接口必须同时提供当前 `obs` 和历史 `obs_history`；不能只把 `obs` 送给 DWAQ actor。MuJoCo 回放时使用与训练一致的双足人形机器人 XML、关节顺序、500/100 Hz 时序和 action scale。当前 policy probe 目标是 `obs [1,76]`、`obs_history [1,380]`、`action [1,21]`。
@@ -239,4 +239,4 @@ These terms are separate from the DWAQ algorithm loss. The VAE loss is velocity 
 
 ## Reproduction and deployment
 
-Run `./projects/03_walk/scripts/train.sh --headless --num_envs 4096` in the local Isaac Lab environment. Record the task, seed, terrain, command ranges, checkpoint, policy/history shapes, joint order, and replay duration. Export both the current observation and the five-frame history input, replay with the same XML and timing in MuJoCo, and only then connect a ROS2/infer_zero adapter. Hardware must reconstruct the same 76-dimensional actor terms from real IMU/encoders and must not depend on privileged critic observations.
+Run `./scripts/train.sh --headless --num_envs 4096` in the local Isaac Lab environment. Record the task, seed, terrain, command ranges, checkpoint, policy/history shapes, joint order, and replay duration. Export both the current observation and the five-frame history input, replay with the same XML and timing in MuJoCo, and only then connect a ROS2/infer_zero adapter. Hardware must reconstruct the same 76-dimensional actor terms from real IMU/encoders and must not depend on privileged critic observations.
