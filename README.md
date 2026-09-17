@@ -1,11 +1,11 @@
-<p align="center"><a href="#zh">🇨🇳 中文</a> &nbsp;|&nbsp; <a href="#en">🇬🇧 English</a></p>
+<p align="center"><a href="#zh">中文</a> &nbsp;|&nbsp; <a href="#en">English</a></p>
 <a id="zh"></a>
 
 # 03 · 行走（DWAQ Walk）
 
 ## 项目定位
 
-这是 Lens110 的盲行走项目，使用 DWAQ：`ActorCriticDWAQ + DWAQPPO + beta-VAE context`。
+这是双足人形机器人的盲行走项目，使用 DWAQ：`ActorCriticDWAQ + DWAQPPO + beta-VAE context`。
 
 - 训练任务：`LeggedLab-Isaac--DWAQ-Lens110-v0`
 - PLAY 任务：`LeggedLab-Isaac--DWAQ-Lens110-PLAY-v0`
@@ -14,6 +14,14 @@
 - 回合上限：`60 s`
 - actor：本体感知、命令、上一动作和历史，不直接接收 base linear velocity
 - critic/VAE：privileged velocity 和历史序列用于 value/latent 学习
+
+## 训练架构和演示
+
+DWAQ、PPO、β-VAE、76/380/21 接口、观测/奖励和从 checkpoint 到真机的完整流程见 [`docs/TRAINING_ARCHITECTURE.md`](docs/TRAINING_ARCHITECTURE.md)。
+
+<video controls width="720" src="docs/media/walking-demo.mp4"></video>
+
+[打开或下载盲行走演示视频](docs/media/walking-demo.mp4)
 
 ## 目录
 
