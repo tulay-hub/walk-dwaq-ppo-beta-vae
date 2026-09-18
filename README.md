@@ -3,14 +3,6 @@
 
 # 行走训练架构（DWAQ + PPO + β-VAE）
 
-## 训练权重如何理解 / Interpreting training weights
-
-本文按本仓库当前代码说明训练机制；已有策略的复现参数以对应 run 的 `params/env.yaml`、`params/agent.yaml` 和部署配置为准。奖励混合系数、逐项环境奖励权重、优化器 loss 系数、专家样本比例以及课程采样范围是不同概念。
-
-混合系数可以写成 85%/15% 这样的配置比例，但不能代表训练过程中实际累计奖励贡献；单项 reward 的数值范围、门控、控制步长和出现频率都不同。需要实际贡献占比时，应统计同一 run 中每项加权回报，而不是把配置权重归一化成百分比。
-
-Configuration mixing coefficients are not measured reward contributions. Environment weights, optimizer coefficients, expert sampling and curriculum schedules describe different parts of training. Reproduce a saved policy with its own run snapshots.
-
 ## PPO、β-VAE 与奖励权重的分工
 
 当前策略由 `DWAQRunner → ActorCriticDWAQ → DWAQPPO` 构建；PPO 优化 actor/critic，β-VAE 通过独立 Adam 更新编码器/解码器。没有配置 AMP 判别器或专家动作模仿损失；腿部周期参考奖励是参数化步态先验，不等同于专家动作数据集。
@@ -189,6 +181,14 @@ r_track = exp(-||tracking_error||² / std²)
 | 步态先验 | `gait_phase_contact` | `+0.2` | 让足端接触匹配左右腿相位 |
 
 这些 reward term 是环境层；DWAQ 的 `velocity MSE`、`reconstruction MSE` 和 `beta*KL` 是算法层 VAE loss，不在 RewardManager 里加权。PPO 的 surrogate/value/entropy 也属于优化器目标，不能和环境 reward 混成一个日志字段。
+
+## 训练权重如何理解 / Interpreting training weights
+
+本文按本仓库当前代码说明训练机制；已有策略的复现参数以对应 run 的 `params/env.yaml`、`params/agent.yaml` 和部署配置为准。奖励混合系数、逐项环境奖励权重、优化器 loss 系数、专家样本比例以及课程采样范围是不同概念。
+
+混合系数可以写成 85%/15% 这样的配置比例，但不能代表训练过程中实际累计奖励贡献；单项 reward 的数值范围、门控、控制步长和出现频率都不同。需要实际贡献占比时，应统计同一 run 中每项加权回报，而不是把配置权重归一化成百分比。
+
+Configuration mixing coefficients are not measured reward contributions. Environment weights, optimizer coefficients, expert sampling and curriculum schedules describe different parts of training. Reproduce a saved policy with its own run snapshots.
 
 ## 7. 训练、导出和回放
 
